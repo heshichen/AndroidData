@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.example.admin.firstapp.MainActivity">
+    <!--tools:showIn="@layout/activity_main">-->
+
+   //根据兄弟组件定位
+   <!--<RelativeLayout-->
+       <!--android:layout_width="fill_parent"-->
+       <!--android:layout_height="fill_parent">-->
+
+      <!--&lt;!&ndash;这个容器是在中央的&ndash;&gt;-->
+      <!--<ImageView-->
+          <!--android:id="@+id/pic1"-->
+          <!--android:layout_width="80dp"-->
+          <!--android:layout_height="80dp"-->
+          <!--android:layout_centerInParent="true"-->
+          <!--android:src="@drawable/img1" />-->
+
+      <!--&lt;!&ndash;在中间图片的左边&ndash;&gt;-->
+      <!--<ImageView-->
+          <!--android:layout_width="80dp"-->
+          <!--android:layout_height="80dp"-->
+          <!--android:layout_centerVertical="true"-->
+          <!--android:layout_toLeftOf="@+id/pic1"-->
+          <!--android:layout_marginRight="10dp"-->
+          <!--android:src="@drawable/img2" />-->
+
+      <!--&lt;!&ndash;在中间图片的右边&ndash;&gt;-->
+      <!--<ImageView-->
+          <!--android:layout_width="80dp"-->
+          <!--android:layout_height="80dp"-->
+          <!--android:layout_centerVertical="true"-->
+          <!--android:layout_toRightOf="@+id/pic1"-->
+          <!--android:layout_marginLeft="10dp"-->
+          <!--android:src="@drawable/img3" />-->
+
+      <!--&lt;!&ndash;中间图片的上面&ndash;&gt;-->
+      <!--<ImageView-->
+          <!--android:layout_width="80dp"-->
+          <!--android:layout_height="80dp"-->
+          <!--android:layout_above="@+id/pic1"-->
+          <!--android:layout_centerHorizontal="true"-->
+          <!--android:layout_marginBottom="10dp"-->
+          <!--android:src="@drawable/img4" />-->
+
+      <!--&lt;!&ndash;在中间图片的下面&ndash;&gt;-->
+
+      <!--<ImageView-->
+          <!--android:layout_width="80dp"-->
+          <!--android:layout_height="80dp"-->
+          <!--android:layout_below="@+id/pic1"-->
+          <!--android:layout_centerHorizontal="true"-->
+          <!--android:layout_marginTop="10dp"-->
+          <!--android:src="@drawable/img5" />-->
+
+   <!--</RelativeLayout>-->
+
+   //margin与padding的区别
+   <RelativeLayout
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:paddingBottom="@dimen/horizontal_margin"
+       android:paddingLeft="@dimen/horizontal_margin"
+       android:paddingRight="@dimen/horizontal_margin"
+       android:paddingTop="@dimen/vertical_margin">
+
+      <Button
+          android:id="@+id/btn1"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Button1"/>
+      <Button
+          android:paddingLeft="100dp"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Button2"
+          android:layout_toRightOf="@+id/btn1"/>
+
+      <Button
+          android:id="@+id/btn2"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Button3"
+          android:layout_alignParentBottom="true"/>
+      <Button
+          android:layout_marginLeft="100dp"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Button4"
+          android:layout_toRightOf="@+id/btn2"
+          android:layout_alignParentBottom="true"/>
+
+   </RelativeLayout>
+
+</android.support.constraint.ConstraintLayout>

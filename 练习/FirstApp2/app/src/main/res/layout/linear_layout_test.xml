@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.example.admin.firstapp.MainActivity">
+    <!--tools:showIn="@layout/activity_main">-->
+
+    //权重 weight
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:orientation="vertical">-->
+
+        <!--<LinearLayout-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="fill_parent"-->
+            <!--android:background="#ADFF2F"-->
+            <!--android:layout_weight="1"/>-->
+
+
+        <!--<LinearLayout-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="fill_parent"-->
+            <!--android:background="#DA70D6"-->
+            <!--android:layout_weight="2"/>-->
+
+        <!--<TextView-->
+            <!--android:layout_weight="2"-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="fill_parent"-->
+            <!--android:text="one"-->
+            <!--android:background="#98FB98"/>-->
+
+        <!--<TextView-->
+            <!--android:layout_weight="3"-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="fill_parent"-->
+            <!--android:text="two"-->
+            <!--android:background="#FFFF00"/>-->
+
+        <!--<TextView-->
+            <!--android:layout_weight="4"-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="fill_parent"-->
+            <!--android:text="three"-->
+            <!--android:background="#FF00FF"/>-->
+
+    <!--</LinearLayout>-->
+
+    //分割线 divider
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:divider="@drawable/ktv_line_div"-->
+        <!--android:orientation="vertical"-->
+        <!--android:showDividers="middle"-->
+        <!--android:dividerPadding="10dp">-->
+
+        <!--<Button-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="按钮1"/>-->
+
+        <!--<Button-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="按钮1"/>-->
+
+        <!--<Button-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="按钮1"/>-->
+    <!--</LinearLayout>-->
+
+    // 简单例子
+    <!--<LinearLayout-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="fill_parent"-->
+        <!--android:orientation="vertical">-->
+
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="请输入要保存的电话号码"/>-->
+        <!--<EditText-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="wrap_content" />-->
+        <!--<LinearLayout-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:orientation="horizontal"-->
+            <!--android:gravity="right">-->
+            <!--<Button-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="保存"/>-->
+            <!--<Button-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="清空"/>-->
+        <!--</LinearLayout>-->
+    <!--</LinearLayout>-->
+
+    <!--使用Layout_gravity的一个很重要的问题!!!
+    问题内容: 在一个LinearLayout的水平方向中布置两个TextView,
+    想让一个左,一个右,怎么搞? 或许你会脱口而出:"gravity设置一个left,
+    一个right就可以啦!" 真的这么简单?你试过吗?
+    写个简单的Layout你就会发现,事与愿违了: 代码如下：-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="200dp"
+            android:layout_gravity="left"
+            android:background="#FF7878"
+            android:gravity="center"
+            android:text="O(∩_∩)O哈哈~"
+            android:padding="10dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="200dp"
+            android:layout_gravity="right"
+            android:background="#FF7428"
+            android:gravity="bottom"
+            android:text="(*^__^*) 嘻嘻……"
+            android:padding="10dp"/>
+
+    </LinearLayout>
+
+
+</android.support.constraint.ConstraintLayout>

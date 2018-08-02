@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.example.admin.firstapp.MainActivity">
+    <!--tools:showIn="@layout/activity_main">-->
+
+    <!--android:collapseColumns:设置需要被隐藏的列的序号-->
+    <!--android:shrinkColumns:设置允许被收缩的列的列序号-->
+    <!--android:stretchColumns:设置运行被拉伸的列的列序号-->
+
+    <!--以上这三个属性的列号都是从0开始算的,比如shrinkColunmns = "2",对应的是第三列！-->
+    <!--可以设置多个,用逗号隔开比如"0,2",如果是所有列都生效,则用"*"号即可-->
+    <!--除了这三个常用属性,还有两个属性,分别就是跳格子以及合并单元格,这和HTML中的Table类似:-->
+
+    <!--android:layout_column="2":表示的就是跳过第二个,直接显示到第三个格子处,从1开始算的!-->
+    <!--android:layout_span="4":表示合并4个单元格,也就说这个组件占4个单元格-->
+
+    <!--<TableLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:shrinkColumns="0,1">-->
+
+        <!--<TableRow>-->
+
+            <!--<Button-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="one" />-->
+
+            <!--<Button-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="two" />-->
+
+            <!--<Button-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="three" />-->
+
+            <!--<Button-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="four" />-->
+
+            <!--<Button-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="five" />-->
+
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="文本xx"/>-->
+
+        <!--</TableRow>-->
+
+    <!--</TableLayout>-->
+
+    <!--实例 登录页面-->
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:stretchColumns="0,3">
+
+        <TableRow>
+            <TextView />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="用户名:" />
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="150dp" />
+            <TextView />
+        </TableRow>
+
+        <TableRow>
+            <TextView />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="密码:" />
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="150dp" />
+            <TextView />
+        </TableRow>
+
+        <TableRow>
+            <TextView />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="登陆" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="退出" />
+
+            <TextView />
+        </TableRow>
+
+
+    </TableLayout>
+
+
+</android.support.constraint.ConstraintLayout>
