@@ -21,6 +21,6 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/grid_latout_test" />
+    <include layout="@layout/ui_test" />
 
 </android.support.design.widget.CoordinatorLayout>

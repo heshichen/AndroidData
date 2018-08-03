@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.example.admin.firstapp.MainActivity"
+    tools:showIn="@layout/activity_main">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="#86ffa1">
+
+        <!--TextView-->
+        <TextView
+            android:layout_marginTop="10dp"
+            android:id="@+id/txtOne"
+            android:layout_width="150dp"
+            android:layout_height="100dp"
+            android:gravity="center"
+            android:text="TextView(显示框)"
+            android:textColor="#EA5246"
+            android:textStyle="bold|italic"
+            android:background="#000000"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:shadowColor="#F9F900"
+            android:shadowDx="30.0"
+            android:shadowDy="30.0"
+            android:shadowRadius="3.0"
+            android:text="带阴影的TextView"
+            android:textColor="#4A4AFF"
+            android:textSize="30sp" />
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:id="@+id/txtThree"
+            android:layout_width="200dp"
+            android:layout_height="64dp"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:background="@drawable/txt_rectborder"
+            android:text="矩形边框的TextView"/>
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_width="200dp"
+            android:layout_height="64dp"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:background="@drawable/txt_radiuborder"
+            android:text="圆角边框的TextView"/>
+        
+        <TextView
+            android:id="@+id/txtZQD"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/button_red"
+            android:drawableLeft="@drawable/button_red"
+            android:drawableRight="@drawable/button_red"
+            android:drawableBottom="@drawable/button_red"
+            android:drawablePadding="10dp"
+            android:gravity="center"
+            android:text="张全蛋"
+            />
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

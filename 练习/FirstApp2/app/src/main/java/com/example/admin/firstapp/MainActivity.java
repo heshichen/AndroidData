@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import java.sql.Time;
 import java.util.Timer;
@@ -51,34 +52,44 @@ public class MainActivity extends AppCompatActivity {
         Drawable g = getResources().getDrawable(R.drawable.s_7);
         Drawable h = getResources().getDrawable(R.drawable.s_8);
         //通过setForeground来设置前景图片
-        switch (i)
+        if (frame != null)
         {
-            case 0:
-                frame.setForeground(a);
-                break;
-            case 1:
-                frame.setForeground(b);
-                break;
-            case 2:
-                frame.setForeground(c);
-                break;
-            case 3:
-                frame.setForeground(d);
-                break;
-            case 4:
-                frame.setForeground(e);
-                break;
-            case 5:
-                frame.setForeground(f);
-                break;
-            case 6:
-                frame.setForeground(g);
-                break;
-            case 7:
-                frame.setForeground(h);
-                break;
+            switch (i)
+            {
+                case 0:
+                    frame.setForeground(a);
+                    break;
+                case 1:
+                    frame.setForeground(b);
+                    break;
+                case 2:
+                    frame.setForeground(c);
+                    break;
+                case 3:
+                    frame.setForeground(d);
+                    break;
+                case 4:
+                    frame.setForeground(e);
+                    break;
+                case 5:
+                    frame.setForeground(f);
+                    break;
+                case 6:
+                    frame.setForeground(g);
+                    break;
+                case 7:
+                    frame.setForeground(h);
+                    break;
+            }
+        }
+        else
+        {
+            frame = (FrameLayout) findViewById(R.id.myframe);
+            Log.d("frame", "move: 重新创建对象");
         }
     }
+
+    private TextView txtZQD;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-//        FrameLayout frame = (FrameLayout)findViewById(R.id.mylayout);
+//        FrameLayout frame = (FrameLayout)findViewById(R.id.myframe);
 //        final MeziView mezi = new MeziView(MainActivity.this);
 //        为我们的萌妹子添加触摸事件监听器
 //        mezi.setOnTouchListener(new View.OnTouchListener() {
@@ -102,14 +113,21 @@ public class MainActivity extends AppCompatActivity {
 //        });
 //        frame.addView(mezi);
 
-        frame = (FrameLayout) findViewById(R.id.mylayout);
-        //定义一个定时器对象，定时发送消息给handler
-        new Timer().schedule(new TimerTask() {
-            @Override
-            public void run() {
-                handler.sendEmptyMessage(0x123);
-            }
-        }, 0, 170);
+//        frame = (FrameLayout) findViewById(R.id.myframe);
+//        //定义一个定时器对象，定时发送消息给handler
+//        new Timer().schedule(new TimerTask() {
+//            @Override
+//            public void run() {
+//                handler.sendEmptyMessage(0x123);
+//            }
+//        }, 0, 170);
+
+        txtZQD = (TextView) findViewById(R.id.txtZQD);
+        Drawable[] drawable = txtZQD.getCompoundDrawables();
+        // 数组下表0~3,依次是:左上右下
+        drawable[1].setBounds(100, 0, 200, 200);
+        txtZQD.setCompoundDrawables(drawable[0], drawable[1], drawable[2],
+                drawable[3]);
     }
 
     @Override
