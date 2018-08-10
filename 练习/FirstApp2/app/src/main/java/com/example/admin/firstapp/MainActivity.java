@@ -1,5 +1,8 @@
 package com.example.admin.firstapp;
 
+import android.annotation.SuppressLint;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -8,14 +11,31 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.ImageSpan;
+import android.text.style.StrikethroughSpan;
+import android.text.style.StyleSpan;
+import android.text.style.URLSpan;
+import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.FrameLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.lang.reflect.Field;
 import java.sql.Time;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -122,13 +142,122 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        }, 0, 170);
 
-        txtZQD = (TextView) findViewById(R.id.txtZQD);
-        Drawable[] drawable = txtZQD.getCompoundDrawables();
-        // 数组下表0~3,依次是:左上右下
-        drawable[1].setBounds(100, 0, 200, 200);
-        txtZQD.setCompoundDrawables(drawable[0], drawable[1], drawable[2],
-                drawable[3]);
+//        txtZQD = (TextView) findViewById(R.id.txtZQD);
+//        Drawable[] drawable = txtZQD.getCompoundDrawables();
+//        // 数组下表0~3,依次是:左上右下
+//        drawable[1].setBounds(0, 0, 100, 100);
+//        txtZQD.setCompoundDrawables(drawable[0], drawable[1], drawable[2],
+//                drawable[3]);
+
+        //TextView 显示HTML
+//        TextView t1 = (TextView)findViewById(R.id.txtSix);
+//        String s1 = "<font color='blue'><b>百度一下，你就知道~：</b></font><br>";
+//        s1 += "<a href = 'http://www.baidu.com'>百度</a>";
+//        t1.setText(Html.fromHtml(s1));
+//        t1.setMovementMethod(LinkMovementMethod.getInstance());
+
+        //TextView 显示HTML Image
+//        final TextView t1 = (TextView)findViewById(R.id.txtSix);
+//        String s1 = "图片：<img src = 'button_red'/><br>";
+//        t1.setText(Html.fromHtml(s1, new Html.ImageGetter() {
+//            @Override
+//            public Drawable getDrawable(String source) {
+//                Drawable draw = null;
+//                try {
+//                    Field field = R.drawable.class.getField(source);
+//                    int resourceId = Integer.parseInt(field.get(null).toString());
+//                    draw = getResources().getDrawable(resourceId);
+//                    draw.setBounds(0, 0, draw.getIntrinsicWidth(), draw.getIntrinsicHeight());
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//                return draw;
+//            }
+//        }, null));
+//        richextTest();
+
+        //Button
+//        final Button btnOne = (Button) findViewById(R.id.btnOne);
+//        final Button btnTwo = (Button) findViewById(R.id.btnTwo);
+//        btnTwo.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (btnTwo.getText().toString().equals("按钮不可用"))
+//                {
+//                    btnOne.setEnabled(false);
+//                    btnTwo.setText("按钮可用");
+//                }
+//                else
+//                {
+//                    btnOne.setEnabled(true);
+//                    btnTwo.setText("按钮不可用");
+//                }
+//            }
+//        });
+
+        //单选按钮 radio button
+        radioTest();
+
+        //多选按钮
+        checkBoxTest();
     }
+
+    private CheckBox cb_one;
+    private CheckBox cb_two;
+    private CheckBox cb_three;
+    private Button btn_send;
+
+    void checkBoxTest() {
+        cb_one = (CheckBox) findViewById(R.id.cb_one);
+        cb_two = (CheckBox) findViewById(R.id.cb_two);
+        cb_three = (CheckBox) findViewById(R.id.cb_three);
+        btn_send = (Button) findViewById(R.id.btnPost2);
+
+        cb_one.setOnCheckedChangeListener(this);
+        cb_two.setOnCheckedChangeListener(this);
+        cb_three.setOnCheckedChangeListener(this);
+        btn_send.setOnClickListener(this);
+    }
+
+    void radioTest() {
+        RadioGroup radgroup = (RadioGroup) findViewById(R.id.radioGroup);
+        //第一种获取单选按钮值的方法
+        //为radioGroup设置一个监听器:setOnCheckedChanged()
+        radgroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                RadioButton radBtn = (RadioButton) findViewById(checkedId);
+                Toast.makeText(getApplicationContext(), "按钮组值发生改变,你选了" + radBtn.getText(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+
+//    void richextTest () {
+//        TextView t1 = (TextView) findViewById(R.id.txtSeven);
+//        TextView t2 = (TextView) findViewById(R.id.txtEight);
+//
+//        SpannableString span = new SpannableString("红色打电话斜体删除线绿色下划线图片:.");
+//        //1.设置背景色,setSpan时需要指定的flag,Spanned.SPAN_EXCLUSIVE_EXCLUSIVE(前后都不包括)
+//        span.setSpan(new ForegroundColorSpan(Color.RED), 0, 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+//        //2.用超链接标记文本
+//        span.setSpan(new URLSpan("tel:4155551212"), 2, 5, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+//        //3.用样式标记文本（斜体）
+//        span.setSpan(new StyleSpan(Typeface.BOLD_ITALIC), 5,7, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+//        //4.用删除线标记文本
+//        span.setSpan(new StrikethroughSpan(), 7, 10, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+//        //5.用下划线标记文本
+//        span.setSpan(new UnderlineSpan(), 10,16, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+//        //6.用颜色标记
+//        span.setSpan(new ForegroundColorSpan(Color.GREEN), 10, 13,Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+//        //7.获取Drawable资源
+//        Drawable d = getResources().getDrawable(R.mipmap.ic_launcher);
+//        d.setBounds(0,0,d.getIntrinsicWidth(), d.getIntrinsicHeight());
+//        //8.创建ImageSpan,然后用ImageSpan来替换文本
+//        ImageSpan imgSpan = new ImageSpan(d, ImageSpan.ALIGN_BASELINE);
+//        span.setSpan(imgSpan, 18,19, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+//        t1.setText(span);
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

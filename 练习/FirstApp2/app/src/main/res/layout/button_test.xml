@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.example.admin.firstapp.MainActivity">
+    <!--tools:showIn="@layout/activity_main">-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <!--<Button-->
+            <!--android:id="@+id/btnOne"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="64dp"-->
+            <!--android:background="@drawable/bbuton_danger_rounded"-->
+            <!--android:text="登录"-->
+            <!--android:layout_margin="10dp"/>-->
+
+        <!--<Button-->
+            <!--android:id="@+id/btnTwo"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="64dp"-->
+            <!--android:text="按钮不可用"-->
+            <!--android:layout_margin="10dp"/>-->
+
+        <com.example.admin.firstapp.MyButton
+            android:layout_width="match_parent"
+            android:layout_height="364dp"
+            android:src="@mipmap/ic_tur_icon"
+            android:background="@color/bottom_bg"
+            android:scaleType="center"/>
+
+    </LinearLayout>
+
+
+</android.support.constraint.ConstraintLayout>
