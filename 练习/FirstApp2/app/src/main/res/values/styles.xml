@@ -21,4 +21,11 @@
         <item name="android:button">@drawable/mycheckbox</item>
     </style>
 
+    <style name="roomRatingBar" parent="@android:style/Widget.RatingBar">
+        <item name="android:progressDrawable">@drawable/ratingbar_full</item>
+        <item name="android:minWidth">24dip</item>
+        <item name="android:minHeight">16dip</item>
+        <item name="android:gravity">center</item>
+    </style>
+
 </resources>

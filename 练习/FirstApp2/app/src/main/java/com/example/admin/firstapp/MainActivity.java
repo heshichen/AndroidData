@@ -1,12 +1,16 @@
 package com.example.admin.firstapp;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -22,25 +26,44 @@ import android.text.style.StyleSpan;
 import android.text.style.URLSpan;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.DatePicker;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RatingBar;
+import android.widget.ScrollView;
+import android.widget.Scroller;
+import android.widget.SeekBar;
+import android.widget.SimpleAdapter;
+import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.lang.reflect.Field;
 import java.sql.Time;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener,
+        CompoundButton.OnCheckedChangeListener,DatePicker.OnDateChangedListener,AdapterView.OnItemClickListener{
 
 
     //初始化变量，帧布局
@@ -110,6 +133,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private TextView txtZQD;
+    private Context mContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,6 +141,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        mContext = MainActivity.this;
 //        FrameLayout frame = (FrameLayout)findViewById(R.id.myframe);
 //        final MeziView mezi = new MeziView(MainActivity.this);
 //        为我们的萌妹子添加触摸事件监听器
@@ -196,41 +221,282 @@ public class MainActivity extends AppCompatActivity {
 //        });
 
         //单选按钮 radio button
-        radioTest();
+//        radioTest();
 
         //多选按钮
-        checkBoxTest();
+//        checkBoxTest();
+
+        //自定义菊花
+//        imgPgbarTest();
+
+        //拖动条
+//        mContext = MainActivity.this;
+//        bindViews();
+
+        //星星
+//        ratingBarTest();
+
+        //scrollView
+//        bindViews();
+
+        //日期选择器
+//        dateTest();
+
+        //ArrayAdapter使用示例
+//        adapterTest();
+
+//        simpleAdapterTest();
+
+//        simpleCursorAdapterTest();
+
+        baseAdapterTest();
     }
 
-    private CheckBox cb_one;
-    private CheckBox cb_two;
-    private CheckBox cb_three;
-    private Button btn_send;
+    //自定义BaseAdapter，然后绑定ListView的最简单例子
+    private List<Animal> mData = null;
+    private AnimalAdapter mAdapter = null;
+    private ListView list_animal;
 
-    void checkBoxTest() {
-        cb_one = (CheckBox) findViewById(R.id.cb_one);
-        cb_two = (CheckBox) findViewById(R.id.cb_two);
-        cb_three = (CheckBox) findViewById(R.id.cb_three);
-        btn_send = (Button) findViewById(R.id.btnPost2);
+    void baseAdapterTest()
+    {
+        list_animal = (ListView) findViewById(R.id.list_test);
+        //动态加载顶部View和底部View
+        final LayoutInflater inflater = LayoutInflater.from(this);
+        View headView = inflater.inflate(R.layout.view_header, null, false);
+        View footView = inflater.inflate(R.layout.view_footer, null, false);
 
-        cb_one.setOnCheckedChangeListener(this);
-        cb_two.setOnCheckedChangeListener(this);
-        cb_three.setOnCheckedChangeListener(this);
-        btn_send.setOnClickListener(this);
+        mData = new LinkedList<Animal>();
+        for (int i = 0; i < 20; i++){
+            mData.add(new Animal("狗说", "你是狗么？", R.mipmap.ic_icon_dog));
+            mData.add(new Animal("牛说", "你是牛么?", R.mipmap.ic_icon_cow));
+            mData.add(new Animal("鸭说", "你是鸭么?", R.mipmap.ic_icon_duck));
+            mData.add(new Animal("鱼说", "你是鱼么?", R.mipmap.ic_icon_fish));
+            mData.add(new Animal("马说", "你是马么?", R.mipmap.ic_icon_horse));
+        }
+        mAdapter = new AnimalAdapter((LinkedList<Animal>) mData, mContext);
+        //添加表头表尾需要写在setAdapter方法调用之前
+        list_animal.addHeaderView(headView);
+        list_animal.addFooterView(footView);
+        //列表从底部开始显示
+        list_animal.setStackFromBottom(false);
+
+        list_animal.setAdapter(mAdapter);
+        list_animal.setOnItemClickListener(this);
     }
 
-    void radioTest() {
-        RadioGroup radgroup = (RadioGroup) findViewById(R.id.radioGroup);
-        //第一种获取单选按钮值的方法
-        //为radioGroup设置一个监听器:setOnCheckedChanged()
-        radgroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Toast.makeText(mContext,"你点击了第" + position + "项",Toast.LENGTH_SHORT).show();
+    }
+
+    //SimpleCursorAdapter使用示例
+    void simpleCursorAdapterTest()
+    {
+
+        //读取联系人
+        Cursor cursor = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,null,null,null,null);
+        Log.d(String.valueOf(cursor.getColumnNames()), "simpleCursorAdapterTest: ");
+//        cursor.getColumnNames();
+
+        SimpleCursorAdapter spcAdapter = new SimpleCursorAdapter(this, R.layout.simple_cursor_list_item, cursor,
+                new String[]{ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME, ContactsContract.CommonDataKinds.Phone.NUMBER},
+                new int[]{R.id.list_name, R.id.list_phone});
+
+        ListView list_test = (ListView) findViewById(R.id.list_test);
+        list_test.setAdapter(spcAdapter);
+    }
+
+    //SimpleAdapter 使用示例
+    private String[] names = new String[]{"B神","基神","曹神"};
+    private String[] says = new String[]{"无形被黑，最为致命", "大神好厉害~", "我将带头日狗~"};
+    private int[] imgIds = new int[]{R.mipmap.head_icon1, R.mipmap.head_icon2, R.mipmap.head_icon3};
+
+    void simpleAdapterTest() {
+        List<Map<String, Object>> listitem = new ArrayList<Map<String, Object>>();
+        for (int i = 0; i < names.length; i++) {
+            Map<String, Object> showitem = new HashMap<String, Object>();
+            showitem.put("touxiang", imgIds[i]);
+            showitem.put("name", names[i]);
+            showitem.put("says", says[i]);
+            listitem.add(showitem);
+        }
+        //创建一个 SimpleAdapter
+        SimpleAdapter myAdapter = new SimpleAdapter(getApplicationContext(),
+                listitem, R.layout.list_item,
+                new String[]{"touxiang", "name", "says"},
+                new int[]{R.id.imgtou, R.id.name, R.id.says});
+        ListView listView = (ListView) findViewById(R.id.list_test);
+        listView.setAdapter(myAdapter);
+    }
+
+    void adapterTest() {
+        String[] strs = {"机身","B神","象神","槽深","J神","机身","B神","象神","槽深","J神"};
+//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_expandable_list_item_1,strs);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.myarray,android.R.layout.simple_list_item_multiple_choice );
+        ListView list_test = (ListView) findViewById(R.id.list_test);
+        list_test.setAdapter(adapter);
+    }
+
+    void dateTest()
+    {
+        DatePicker dp_test = (DatePicker) findViewById(R.id.dp_test);
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int monthOfYear = calendar.get(Calendar.MONTH);
+        int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+        dp_test.init(year,monthOfYear,dayOfMonth,this);
+    }
+
+    @Override
+    public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+        Toast.makeText(mContext,"您选择的日期是：" + year + "年" + monthOfYear + "月" + dayOfMonth + "日",Toast.LENGTH_SHORT).show();;
+    }
+
+    private Button btn_down;
+    private Button btn_up;
+    private ScrollView scrollView;
+    private TextView txt_show;
+
+    public void bindViews() {
+        btn_down = (Button) findViewById(R.id.btn_down);
+        btn_up = (Button) findViewById(R.id.btn_up);
+        scrollView = (ScrollView) findViewById(R.id.scrollView);
+        txt_show = (TextView) findViewById(R.id.txt_cur);
+        btn_down.setOnClickListener(this);
+        btn_up.setOnClickListener(this);
+
+        StringBuffer sb = new StringBuffer();
+        for (int i = 1; i <= 100; i++) {
+            sb.append("呵呵 * " + i + "\n");
+        }
+        txt_show.setText(sb.toString());
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_down:
+                scrollView.fullScroll(ScrollView.FOCUS_DOWN);
+                break;
+            case R.id.btn_up:
+                scrollView.fullScroll(ScrollView.FOCUS_UP);
+                break;
+        }
+    }
+
+    public static void scrollToBtoom(final  View scroll, final View inner) {
+        Handler mHandler = new Handler();
+        mHandler.post(new Runnable() {
             @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                RadioButton radBtn = (RadioButton) findViewById(checkedId);
-                Toast.makeText(getApplicationContext(), "按钮组值发生改变,你选了" + radBtn.getText(), Toast.LENGTH_LONG).show();
+            public void run() {
+                if (scroll == null || inner == null) {
+                    return;
+                }
+                int offset = inner.getMeasuredHeight() - scroll.getHeight();
+                if (offset < 0) {
+                    offset = 0;
+                }
+                scroll.scrollTo(0, offset);
             }
         });
     }
+
+    //    private RatingBar rb_normal;
+//
+//    public void ratingBarTest() {
+//        rb_normal = (RatingBar) findViewById(R.id.rb_normal);
+//        rb_normal.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+//            @Override
+//            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+//                Toast.makeText(mContext, "rating:" + String.valueOf(rating), Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//    }
+//
+//    private SeekBar sb_normal;
+//    private TextView txt_cur;
+//    private Context mContext;
+//
+//    public void bindViews() {
+//        sb_normal = (SeekBar) findViewById(R.id.sb_normal);
+//        txt_cur = (TextView) findViewById(R.id.txt_cur);
+//        sb_normal.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+//            @Override
+//            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+//                txt_cur.setText("当前进度值：" + progress + " / 100");
+//            }
+//
+//            @Override
+//            public void onStartTrackingTouch(SeekBar seekBar) {
+//                Toast.makeText(mContext, "触碰SeekBar", Toast.LENGTH_SHORT).show();
+//            }
+//
+//            @Override
+//            public void onStopTrackingTouch(SeekBar seekBar) {
+//                Toast.makeText(mContext, "放开SeekBar", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//    }
+
+//    private ImageView img_pgbar;
+//    AnimationDrawable ad;
+//
+//    void imgPgbarTest()
+//    {
+//        img_pgbar = (ImageView) findViewById(R.id.img_pgbar);
+//        ad = (AnimationDrawable) img_pgbar.getDrawable();
+//        img_pgbar.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                ad.start();
+//            }
+//        }, 100);
+//    }
+
+//    private CheckBox cb_one;
+//    private CheckBox cb_two;
+//    private CheckBox cb_three;
+//    private Button btn_send;
+//
+//    void checkBoxTest() {
+//        cb_one = (CheckBox) findViewById(R.id.cb_one);
+//        cb_two = (CheckBox) findViewById(R.id.cb_two);
+//        cb_three = (CheckBox) findViewById(R.id.cb_three);
+//        btn_send = (Button) findViewById(R.id.btnPost2);
+//
+//        cb_one.setOnCheckedChangeListener(this);
+//        cb_two.setOnCheckedChangeListener(this);
+//        cb_three.setOnCheckedChangeListener(this);
+//        btn_send.setOnClickListener(this);
+//    }
+//
+//    @Override
+//    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+//        if(compoundButton.isChecked()) Toast.makeText(this,compoundButton.getText().toString(),Toast.LENGTH_SHORT).show();
+//    }
+//
+//    @Override
+//    public void onClick(View view) {
+//        String choose = "";
+//        if(cb_one.isChecked())choose += cb_one.getText().toString() + "";
+//        if(cb_two.isChecked())choose += cb_two.getText().toString() + "";
+//        if(cb_three.isChecked())choose += cb_three.getText().toString() + "";
+//        Toast.makeText(this,choose,Toast.LENGTH_SHORT).show();
+//    }
+//
+//    void radioTest() {
+//        RadioGroup radgroup = (RadioGroup) findViewById(R.id.radioGroup);
+//        //第一种获取单选按钮值的方法
+//        //为radioGroup设置一个监听器:setOnCheckedChanged()
+//        radgroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(RadioGroup group, int checkedId) {
+//                RadioButton radBtn = (RadioButton) findViewById(checkedId);
+//                Toast.makeText(getApplicationContext(), "按钮组值发生改变,你选了" + radBtn.getText(), Toast.LENGTH_LONG).show();
+//            }
+//        });
+//    }
 
 
 //    void richextTest () {
@@ -279,5 +545,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
     }
 }

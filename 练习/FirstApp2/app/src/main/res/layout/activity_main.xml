@@ -21,6 +21,6 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/radio_check_button_test" />
+    <include layout="@layout/adapter_test" />
 
 </android.support.design.widget.CoordinatorLayout>
