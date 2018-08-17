@@ -17,14 +17,14 @@ import java.util.LinkedList;
  * Created by admin on 2018/8/17.
  */
 
-public class MyAdapter extends BaseAdapter {
+public class MyAdapter<T> extends BaseAdapter {
 
     private Context mContext;
-    private LinkedList<Data> mData;
+    private LinkedList<T> mData;
 
     public MyAdapter(){}
 
-    public MyAdapter(LinkedList<Data> mData, Context mContext){
+    public MyAdapter(LinkedList<T> mData, Context mContext){
         this.mData = mData;
         this.mContext = mContext;
     }
@@ -56,7 +56,7 @@ public class MyAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        viewHolder.img_icon.setBackgroundResource(mData.get(position).getImgId());
+        viewHolder.img_icon.setImageResource(mData.get(position).getImgId());
         viewHolder.txt_content.setText(mData.get(position).getContent());
         return convertView;
     }
@@ -66,17 +66,17 @@ public class MyAdapter extends BaseAdapter {
         TextView txt_content;
     }
 
-    public void add(Data data) {
+    public void add(T data) {
         if (mData == null) {
-            mData = new LinkedList<Data>();
+            mData = new LinkedList<>();
         }
         mData.add(data);
         notifyDataSetChanged();
     }
 
-    public void add(int postion, Data data) {
+    public void add(int postion, T data) {
         if (mData == null) {
-            mData = new LinkedList<Data>();
+            mData = new LinkedList<>();
         }
         if (mData.size() > postion) {
             mData.add(postion, data);
@@ -94,6 +94,13 @@ public class MyAdapter extends BaseAdapter {
     public void remove(int positon) {
         if (mData.size() != 0 && mData != null) {
             mData.remove(positon);
+        }
+        notifyDataSetChanged();
+    }
+
+    public void clear() {
+        if(mData != null && mData.size() > 0) {
+            mData.clear();
         }
         notifyDataSetChanged();
     }
