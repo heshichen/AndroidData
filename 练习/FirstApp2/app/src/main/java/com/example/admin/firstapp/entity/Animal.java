@@ -1,4 +1,4 @@
-package com.example.admin.firstapp;
+package com.example.admin.firstapp.entity;
 
 /**
  * Created by admin on 2018/8/16.

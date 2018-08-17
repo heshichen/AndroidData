@@ -27,4 +27,8 @@
         android:textColor="#EA5C4D"
         android:textSize="18sp"/>
 
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
 </LinearLayout>

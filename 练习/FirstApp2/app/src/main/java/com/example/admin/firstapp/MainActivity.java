@@ -1,66 +1,44 @@
 package com.example.admin.firstapp;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.database.Cursor;
-import android.graphics.Color;
-import android.graphics.Typeface;
-import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.ContactsContract;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Html;
-import android.text.SpannableString;
-import android.text.Spanned;
-import android.text.method.LinkMovementMethod;
-import android.text.style.ForegroundColorSpan;
-import android.text.style.ImageSpan;
-import android.text.style.StrikethroughSpan;
-import android.text.style.StyleSpan;
-import android.text.style.URLSpan;
-import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.RatingBar;
 import android.widget.ScrollView;
-import android.widget.Scroller;
-import android.widget.SeekBar;
 import android.widget.SimpleAdapter;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.lang.reflect.Field;
-import java.sql.Time;
+import com.example.admin.firstapp.adapter.ContactListAdapter;
+import com.example.admin.firstapp.adapter.MyAdapter;
+import com.example.admin.firstapp.entity.Animal;
+import com.example.admin.firstapp.entity.Data;
+import com.example.admin.firstapp.entity.Person;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener,
         CompoundButton.OnCheckedChangeListener,DatePicker.OnDateChangedListener,AdapterView.OnItemClickListener{
@@ -249,7 +227,56 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 //        simpleCursorAdapterTest();
 
-        baseAdapterTest();
+//        baseAdapterTest();
+
+//        listViewTest();
+
+        listViewDataUpdateTest();
+    }
+
+    //ListView的数据更新问题
+    private ListView list_one;
+    private MyAdapter myAdapter = null;
+    private List<Data> myData = null;
+    void listViewDataUpdateTest() {
+        list_one = (ListView) findViewById(R.id.list_test);
+        myData = new LinkedList<Data>();
+
+        myAdapter = new MyAdapter((LinkedList<Data>) myData, mContext);
+        list_one.setAdapter(myAdapter);
+
+        Button btn_add = (Button)findViewById(R.id.add_btn);
+        btn_add.setOnClickListener(this);
+
+        Button btn_add2 = (Button)findViewById(R.id.add_btn2);
+        btn_add2.setOnClickListener(this);
+
+        Button btn_remove = (Button)findViewById(R.id.remove_btn);
+        btn_remove.setOnClickListener(this);
+
+        Button btn_remove2 = (Button)findViewById(R.id.remove_btn2);
+        btn_remove2.setOnClickListener(this);
+    }
+
+    //ListView之checkbox错位问题解决
+    private List<Person> aData = null;
+    private ContactListAdapter aAdapter = null;
+    private ListView list_person;
+
+    void listViewTest() {
+
+        list_person = (ListView) findViewById(R.id.list_test);
+        list_person.setVerticalScrollBarEnabled(false);
+        aData = new LinkedList<Person>();
+        for (int i = 0; i < 20; i++) {
+            aData.add(new Person("何炅" + i,"18565610000", R.mipmap.head_icon1));
+            aData.add(new Person("谢娜" + i,"18565611111", R.mipmap.head_icon2));
+            aData.add(new Person("何炅" + i,"18565613333", R.mipmap.head_icon3));
+        }
+        aAdapter = new ContactListAdapter((LinkedList<Person>) aData, mContext);
+
+//        list_person.setAdapter(aAdapter);
+//        list_person.setOnItemClickListener(this);
     }
 
     //自定义BaseAdapter，然后绑定ListView的最简单例子
@@ -373,6 +400,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         txt_show.setText(sb.toString());
     }
 
+    private int flag = 1;
+    private Data mData_5 = null;
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -381,6 +411,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btn_up:
                 scrollView.fullScroll(ScrollView.FOCUS_UP);
+                break;
+            case R.id.add_btn:
+                mData_5 =  new Data(R.mipmap.head_icon1, "给诸葛跪了！~~~ x " + flag);
+                myAdapter.add(mData_5);
+                flag++;
+                break;
+            case R.id.add_btn2:
+                if (flag >= 5) {
+                    mData_5 =  new Data(R.mipmap.head_icon1, "给诸葛跪了！~~~ x " + flag);
+                    myAdapter.add(4, mData_5);
+                } else
+                {
+                    myAdapter.add(new Data(R.mipmap.head_icon1, "给诸葛跪了！~~~ x " + flag));
+                }
+                break;
+            case R.id.remove_btn:
+                if (mData_5 != null) {
+                    myAdapter.remove(mData_5);
+                }
+                break;
+            case R.id.remove_btn2:
+                myAdapter.remove(0);
                 break;
         }
     }

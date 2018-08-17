@@ -8,6 +8,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.admin.firstapp.entity.Animal;
+
 import java.util.LinkedList;
 
 /**
