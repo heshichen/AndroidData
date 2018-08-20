@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/Tag_Book">
+
+    <TextView
+        android:id="@+id/txt_bname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#ec6a56"
+        android:layout_margin="5dp"
+        android:textSize="18sp"
+        android:text="《第一行代码Android》"/>
+
+    <TextView
+        android:id="@+id/txt_bauthor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#51b8e8"
+        android:layout_marginLeft="10dp"
+        android:layout_gravity="center_vertical"
+        android:textSize="18sp"
+        android:text="郭霖"/>
+
+</LinearLayout>

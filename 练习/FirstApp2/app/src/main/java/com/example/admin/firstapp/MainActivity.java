@@ -28,8 +28,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.admin.firstapp.adapter.ContactListAdapter;
+import com.example.admin.firstapp.adapter.MutiLayoutAdapter;
 import com.example.admin.firstapp.adapter.MyAdapter;
 import com.example.admin.firstapp.entity.Animal;
+import com.example.admin.firstapp.entity.App;
+import com.example.admin.firstapp.entity.Book;
 import com.example.admin.firstapp.entity.Data;
 import com.example.admin.firstapp.entity.Person;
 
@@ -231,32 +234,107 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 //        listViewTest();
 
-        listViewDataUpdateTest();
+//        listViewDataUpdateTest();
+
+//        reuseBaseAdapterTest();
+
+        mutiLayoutAdapterTest();
     }
+
+    //ListView Item多布局的实现
+    private static final int TYPE_BOOK = 0;
+    private static final int TYPE_APP = 1;
+    private ListView list_content;
+    private ArrayList<Object> mData3 = null;
+    private MutiLayoutAdapter mutiAdapter = null;
+
+    void mutiLayoutAdapterTest()
+    {
+        mData3 = new ArrayList<Object>();
+        for (int i = 0; i < 20; i++) {
+            switch ((int)(Math.random() * 2)) {
+                case TYPE_BOOK:
+                    mData3.add(new Book("《第一行代码》", "郭霖"));
+                    break;
+                case TYPE_APP:
+                    mData3.add(new App(R.drawable.img1, "百度"));
+                    break;
+            }
+        }
+
+        list_content = (ListView) findViewById(R.id.list_test);
+        mutiAdapter = new MutiLayoutAdapter(mContext, mData3);
+        list_content.setAdapter(mutiAdapter);
+    }
+
+    //构建一个可复用的自定义BaseAdapter
+//    private ListView list_book;
+//    private ListView list_app;
+//
+//    private MyAdapter<App> myAdapter1 = null;
+//    private MyAdapter<Book> myAdapter2 = null;
+//    private List<App> mData1 = null;
+//    private List<Book> mData2 = null;
+//
+//    void reuseBaseAdapterTest() {
+//        list_book = (ListView) findViewById(R.id.list_book);
+//        list_app = (ListView) findViewById(R.id.list_app);
+//
+//        //数据初始化
+//        mData1 = new ArrayList<App>();
+//        mData1.add(new App(R.drawable.img1, "百度"));
+//        mData1.add(new App(R.drawable.img2, "豆瓣"));
+//        mData1.add(new App(R.drawable.img3, "支付宝"));
+//
+//        mData2 = new ArrayList<Book>();
+//        mData2.add(new Book("《第一行代码Android》", "郭霖"));
+//        mData2.add(new Book("《Android群英传》","徐宜生"));
+//        mData2.add(new Book("《Android开发艺术探索》","任玉刚"));
+//
+//        //Adapter 初始化
+//        myAdapter1 = new MyAdapter<App>((ArrayList)mData1, R.layout.item_one) {
+//            @Override
+//            public void bindView(ViewHolder holder, App obj) {
+//                holder.setImageResource(R.id.img_icon, obj.getImg_icon());
+//                holder.setText(R.id.txt_aname, obj.getTxt_name());
+//            }
+//        };
+//        myAdapter2 = new MyAdapter<Book>((ArrayList)mData2, R.layout.item_two) {
+//            @Override
+//            public void bindView(ViewHolder holder, Book obj) {
+//                holder.setText(R.id.txt_bname, obj.getTxt_bname());
+//                holder.setText(R.id.txt_bauthor, obj.getTxt_bauthor());
+//            }
+//        };
+//
+//        //ListView设置下Adapter：
+//        list_app.setAdapter(myAdapter1);
+//        list_book.setAdapter(myAdapter2);
+//    }
 
     //ListView的数据更新问题
     private ListView list_one;
     private MyAdapter myAdapter = null;
     private List<Data> myData = null;
-    void listViewDataUpdateTest() {
-        list_one = (ListView) findViewById(R.id.list_test);
-        myData = new LinkedList<Data>();
-
-        myAdapter = new MyAdapter((LinkedList<Data>) myData, mContext);
-        list_one.setAdapter(myAdapter);
-
-        Button btn_add = (Button)findViewById(R.id.add_btn);
-        btn_add.setOnClickListener(this);
-
-        Button btn_add2 = (Button)findViewById(R.id.add_btn2);
-        btn_add2.setOnClickListener(this);
-
-        Button btn_remove = (Button)findViewById(R.id.remove_btn);
-        btn_remove.setOnClickListener(this);
-
-        Button btn_remove2 = (Button)findViewById(R.id.remove_btn2);
-        btn_remove2.setOnClickListener(this);
-    }
+//    void listViewDataUpdateTest() {
+//        list_one = (ListView) findViewById(R.id.list_test);
+//        myData = new LinkedList<Data>();
+//
+//        myAdapter = new MyAdapter((LinkedList<Data>) myData, mContext);
+//        list_one.setAdapter(myAdapter);
+//
+//        Button btn_add = (Button)findViewById(R.id.add_btn);
+//        btn_add.setOnClickListener(this);
+//
+//        Button btn_add2 = (Button)findViewById(R.id.add_btn2);
+//        btn_add2.setOnClickListener(this);
+//
+//        Button btn_remove = (Button)findViewById(R.id.remove_btn);
+//        btn_remove.setOnClickListener(this);
+//
+//        Button btn_remove2 = (Button)findViewById(R.id.remove_btn2);
+//        btn_remove2.setOnClickListener(this);
+//    }
 
     //ListView之checkbox错位问题解决
     private List<Person> aData = null;
@@ -412,28 +490,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btn_up:
                 scrollView.fullScroll(ScrollView.FOCUS_UP);
                 break;
-            case R.id.add_btn:
-                mData_5 =  new Data(R.mipmap.head_icon1, "给诸葛跪了！~~~ x " + flag);
-                myAdapter.add(mData_5);
-                flag++;
-                break;
-            case R.id.add_btn2:
-                if (flag >= 5) {
-                    mData_5 =  new Data(R.mipmap.head_icon1, "给诸葛跪了！~~~ x " + flag);
-                    myAdapter.add(4, mData_5);
-                } else
-                {
-                    myAdapter.add(new Data(R.mipmap.head_icon1, "给诸葛跪了！~~~ x " + flag));
-                }
-                break;
-            case R.id.remove_btn:
-                if (mData_5 != null) {
-                    myAdapter.remove(mData_5);
-                }
-                break;
-            case R.id.remove_btn2:
-                myAdapter.remove(0);
-                break;
+//            case R.id.add_btn:
+//                mData_5 =  new Data(R.mipmap.head_icon1, "给诸葛跪了！~~~ x " + flag);
+//                myAdapter.add(mData_5);
+//                flag++;
+//                break;
+//            case R.id.add_btn2:
+//                if (flag >= 5) {
+//                    mData_5 =  new Data(R.mipmap.head_icon1, "给诸葛跪了！~~~ x " + flag);
+//                    myAdapter.add(4, mData_5);
+//                } else
+//                {
+//                    myAdapter.add(new Data(R.mipmap.head_icon1, "给诸葛跪了！~~~ x " + flag));
+//                }
+//                break;
+//            case R.id.remove_btn:
+//                if (mData_5 != null) {
+//                    myAdapter.remove(mData_5);
+//                }
+//                break;
+//            case R.id.remove_btn2:
+//                myAdapter.remove(0);
+//                break;
         }
     }
 
