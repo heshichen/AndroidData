@@ -2,6 +2,7 @@ package com.example.admin.firstapp.adapter;
 
 import android.content.ClipData;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,9 +11,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.admin.firstapp.R;
+import com.example.admin.firstapp.entity.Group;
 import com.example.admin.firstapp.entity.Item;
 
-import java.security.acl.Group;
 import java.util.ArrayList;
 
 /**
@@ -78,7 +79,7 @@ public class MyBaseExpandableListAdapter extends BaseExpandableListAdapter {
         } else {
             groupHolder = (ViewHolderGroup) convertView.getTag();
         }
-        groupHolder.tv_group_name.setText(gData.get(groupPosition).getName());
+        groupHolder.tv_group_name.setText(gData.get(groupPosition).getgName());
         return convertView;
     }
 
