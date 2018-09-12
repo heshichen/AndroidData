@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="5dp"
+    tools:context=".activity.ViewFlipperTset">
+
+    <ViewFlipper
+        android:id="@+id/vflp_help"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:inAnimation="@anim/right_in"
+        android:outAnimation="@anim/right_out"
+        android:flipInterval="3000">
+
+        <include layout="@layout/adapter_test" />
+
+    </ViewFlipper>
+
+</RelativeLayout>
