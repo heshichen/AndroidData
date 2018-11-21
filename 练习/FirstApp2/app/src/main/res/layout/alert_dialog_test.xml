@@ -1,0 +1,38 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/btn_show_dialog_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1.显示一个普通的DIALOG"/>
+
+    <Button
+        android:id="@+id/btn_show_dialog_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2.显示一个带普通列表的DIALOG"/>
+
+    <Button
+        android:id="@+id/btn_show_dialog_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="3.显示一个带单选列表的DIALOG"/>
+
+    <Button
+        android:id="@+id/btn_show_dialog_4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="4.显示一个带复选框列表的DIALOG"/>
+
+    <Button
+        android:id="@+id/btn_show_dialog_5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="5.显示一个自定义的DIALOG"/>
+
+
+</LinearLayout>
